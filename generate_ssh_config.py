@@ -247,7 +247,7 @@ for data in instance_data:
     ip_address = data['ip_address']
     ami_id = data['ami_id']
     user = args.user or get_username(ami_id, region)
-    key_name = args.ssh_key_name or f"{data['keyname']}.{args.ssh_key_suffix}"
+    key_name = args.ssh_key_name or f"{data['keyname']}{args.ssh_key_suffix}"
     identity_file = os.path.expanduser(os.path.join(args.ssh_key_dir, key_name))
 
     print(f"# {data['instance_id']}")
