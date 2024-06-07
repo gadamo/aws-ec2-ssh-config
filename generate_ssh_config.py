@@ -3,6 +3,7 @@
 # Usage: python3 app.py --ignore-host-key --region us-east-1 --suffix .example.com --tags Name,Environment --proxy-host bastion.example.com
 import json
 import boto3
+import botocore
 import os
 import argparse
 import sys
@@ -129,7 +130,7 @@ def get_username(ami_id, region):
                 return username
         #return AMI_IDS_TO_USER.get(ami_id, "ec2-user")  # Default to 'ec2-user' if no specific match
         return AMI_IDS_TO_USER.get(ami_id, args.default_user if args.default_user else "ec2-user") 
-    except (boto3.exceptions.Boto3Error, ValueError) as e:
+    except (boto3.exceptions.Boto3Error, botocore.exceptions.ClientError, ValueError) as e:
         print(f"# Error retrieving AMI details for AMI ID {ami_id}: {e}")
         return "ec2-user"  # Fallback to a default user if there's an error
 
